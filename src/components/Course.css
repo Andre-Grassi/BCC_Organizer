@@ -35,6 +35,24 @@
     opacity: 0.8;
 }
 
+/* Prerequisite highlight - pulsating red outline */
+.course.prerequisite-highlight {
+    animation: prereqPulse 1s ease-in-out infinite;
+    z-index: 50;
+}
+
+@keyframes prereqPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 2px rgba(255, 59, 48, 0.6), 0 0 8px rgba(255, 59, 48, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 0 0 4px rgba(255, 59, 48, 0.9), 0 0 16px rgba(255, 59, 48, 0.6);
+    }
+}
+
 /* Completed state */
 .course.completed {
     opacity: 0.45;

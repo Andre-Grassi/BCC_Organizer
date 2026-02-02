@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { DragDropContext } from '@hello-pangea/dnd';
 import Semester from './Semester';
 import { getCoursesBySemester } from '../data/courses';
@@ -5,9 +6,20 @@ import { canMoveTo } from '../utils/validation';
 import './CourseGrid.css';
 
 function CourseGrid({ courses, completedCourses, onCoursesChange, onToggleCompleted, onError }) {
+    const [draggingCourse, setDraggingCourse] = useState(null);
     const semesterData = getCoursesBySemester(courses);
 
+    // Get prerequisites of the currently dragged course
+    const highlightedPrereqs = draggingCourse
+        ? courses[draggingCourse]?.prerequisites.filter(p => p !== 'BARRIER') || []
+        : [];
+
+    const handleDragStart = (start) => {
+        setDraggingCourse(start.draggableId);
+    };
+
     const handleDragEnd = (result) => {
+        setDraggingCourse(null);
         const { destination, source, draggableId } = result;
 
         // Dropped outside
@@ -46,7 +58,7 @@ function CourseGrid({ courses, completedCourses, onCoursesChange, onToggleComple
     };
 
     return (
-        <DragDropContext onDragEnd={handleDragEnd}>
+        <DragDropContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
             <div className="course-grid">
                 <div className="semesters-container">
                     {[1, 2, 3, 4, 5, 6, 7, 8].map(semester => (
@@ -57,6 +69,7 @@ function CourseGrid({ courses, completedCourses, onCoursesChange, onToggleComple
                             completedCourses={completedCourses}
                             onToggleCompleted={onToggleCompleted}
                             isBarrier={semester === 3}
+                            highlightedPrereqs={highlightedPrereqs}
                         />
                     ))}
                 </div>
@@ -66,4 +79,3 @@ function CourseGrid({ courses, completedCourses, onCoursesChange, onToggleComple
 }
 
 export default CourseGrid;
-

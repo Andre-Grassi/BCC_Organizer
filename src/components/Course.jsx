@@ -2,7 +2,7 @@ import { CATEGORY_COLORS } from '../data/courses';
 import { Draggable } from '@hello-pangea/dnd';
 import './Course.css';
 
-function Course({ course, index, isDragDisabled, isCompleted, onToggleCompleted }) {
+function Course({ course, index, isDragDisabled, isCompleted, onToggleCompleted, isPrerequisite }) {
     const backgroundColor = CATEGORY_COLORS[course.category] || '#e0e0e0';
 
     const handleCheckboxClick = (e) => {
@@ -21,7 +21,7 @@ function Course({ course, index, isDragDisabled, isCompleted, onToggleCompleted 
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
-                    className={`course ${snapshot.isDragging ? 'dragging' : ''} ${course.isPlaceholder ? 'placeholder' : ''} ${isCompleted ? 'completed' : ''}`}
+                    className={`course ${snapshot.isDragging ? 'dragging' : ''} ${course.isPlaceholder ? 'placeholder' : ''} ${isCompleted ? 'completed' : ''} ${isPrerequisite ? 'prerequisite-highlight' : ''}`}
                     style={{
                         ...provided.draggableProps.style,
                         backgroundColor,

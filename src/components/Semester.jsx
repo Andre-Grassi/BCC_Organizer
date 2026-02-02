@@ -2,7 +2,7 @@ import { Droppable } from '@hello-pangea/dnd';
 import Course from './Course';
 import './Semester.css';
 
-function Semester({ semester, courses, completedCourses, onToggleCompleted, isBarrier }) {
+function Semester({ semester, courses, completedCourses, onToggleCompleted, isBarrier, highlightedPrereqs }) {
     return (
         <div className="semester">
             <div className="semester-header">
@@ -23,6 +23,7 @@ function Semester({ semester, courses, completedCourses, onToggleCompleted, isBa
                                 index={index}
                                 isCompleted={!!completedCourses[course.code]}
                                 onToggleCompleted={onToggleCompleted}
+                                isPrerequisite={highlightedPrereqs?.includes(course.code)}
                             />
                         ))}
                         {provided.placeholder}
@@ -36,4 +37,3 @@ function Semester({ semester, courses, completedCourses, onToggleCompleted, isBa
 }
 
 export default Semester;
-
