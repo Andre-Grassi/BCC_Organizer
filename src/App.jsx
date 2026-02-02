@@ -5,18 +5,27 @@ import './App.css';
 
 function App() {
   const [courses, setCourses] = useState(INITIAL_COURSES);
+  const [completedCourses, setCompletedCourses] = useState({});
   const [error, setError] = useState(null);
 
   const handleReset = () => {
     setCourses(INITIAL_COURSES);
+    setCompletedCourses({});
     setError(null);
+  };
+
+  const handleToggleCompleted = (courseCode) => {
+    setCompletedCourses(prev => ({
+      ...prev,
+      [courseCode]: !prev[courseCode]
+    }));
   };
 
   return (
     <div className="app">
       <header className="app-header">
         <h1>📚 Organizador de Grade - BCC UFPR</h1>
-        <p className="subtitle">Arraste as disciplinas para organizar sua grade. Respeite os pré-requisitos!</p>
+        <p className="subtitle">Arraste as disciplinas para organizar sua grade. Marque as concluídas!</p>
         <button className="reset-btn" onClick={handleReset}>
           🔄 Resetar Grade
         </button>
@@ -33,7 +42,9 @@ function App() {
       <main className="app-main">
         <CourseGrid
           courses={courses}
+          completedCourses={completedCourses}
           onCoursesChange={setCourses}
+          onToggleCompleted={handleToggleCompleted}
           onError={setError}
         />
       </main>

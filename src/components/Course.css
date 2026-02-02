@@ -1,15 +1,17 @@
 .course {
     padding: 8px 10px;
+    padding-right: 28px;
     border-radius: 6px;
     margin-bottom: 6px;
     cursor: grab;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.3s ease;
     border: 1px solid rgba(0, 0, 0, 0.15);
     display: flex;
     flex-direction: column;
     gap: 2px;
     min-height: 50px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
 .course:hover {
@@ -31,6 +33,43 @@
     border-style: dashed;
     border-width: 2px;
     opacity: 0.8;
+}
+
+/* Completed state */
+.course.completed {
+    opacity: 0.45;
+    filter: grayscale(40%);
+}
+
+.course.completed .course-code,
+.course.completed .course-name {
+    text-decoration: line-through;
+    text-decoration-color: rgba(0, 0, 0, 0.4);
+}
+
+.course.completed:hover {
+    opacity: 0.6;
+}
+
+/* Checkbox */
+.course-checkbox {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: #4caf50;
+    transition: transform 0.15s ease;
+    z-index: 5;
+}
+
+.course-checkbox:hover {
+    transform: scale(1.15);
+}
+
+.course-checkbox:active {
+    transform: scale(0.95);
 }
 
 .course-code {
@@ -56,6 +95,7 @@
 @media (min-width: 768px) {
     .course {
         padding: 10px 12px;
+        padding-right: 32px;
         min-height: 60px;
     }
 
@@ -65,5 +105,12 @@
 
     .course-name {
         font-size: 0.7rem;
+    }
+
+    .course-checkbox {
+        width: 18px;
+        height: 18px;
+        top: 8px;
+        right: 8px;
     }
 }

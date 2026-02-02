@@ -4,7 +4,7 @@ import { getCoursesBySemester } from '../data/courses';
 import { canMoveTo } from '../utils/validation';
 import './CourseGrid.css';
 
-function CourseGrid({ courses, onCoursesChange, onError }) {
+function CourseGrid({ courses, completedCourses, onCoursesChange, onToggleCompleted, onError }) {
     const semesterData = getCoursesBySemester(courses);
 
     const handleDragEnd = (result) => {
@@ -54,6 +54,8 @@ function CourseGrid({ courses, onCoursesChange, onError }) {
                             key={semester}
                             semester={semester}
                             courses={semesterData[semester] || []}
+                            completedCourses={completedCourses}
+                            onToggleCompleted={onToggleCompleted}
                             isBarrier={semester === 3}
                         />
                     ))}
@@ -64,3 +66,4 @@ function CourseGrid({ courses, onCoursesChange, onError }) {
 }
 
 export default CourseGrid;
+

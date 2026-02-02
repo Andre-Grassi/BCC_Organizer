@@ -2,7 +2,7 @@ import { Droppable } from '@hello-pangea/dnd';
 import Course from './Course';
 import './Semester.css';
 
-function Semester({ semester, courses, isBarrier }) {
+function Semester({ semester, courses, completedCourses, onToggleCompleted, isBarrier }) {
     return (
         <div className="semester">
             <div className="semester-header">
@@ -21,6 +21,8 @@ function Semester({ semester, courses, isBarrier }) {
                                 key={course.code}
                                 course={course}
                                 index={index}
+                                isCompleted={!!completedCourses[course.code]}
+                                onToggleCompleted={onToggleCompleted}
                             />
                         ))}
                         {provided.placeholder}
@@ -34,3 +36,4 @@ function Semester({ semester, courses, isBarrier }) {
 }
 
 export default Semester;
+
