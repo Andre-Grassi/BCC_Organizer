@@ -25,12 +25,12 @@
 }
 
 .course-grid::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(180deg, #007AFF 0%, #0056CC 100%);
     border-radius: 4px;
 }
 
 .course-grid::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(135deg, #5a6fd6 0%, #6a4190 100%);
+    background: linear-gradient(180deg, #0066DD 0%, #0044AA 100%);
 }
 
 /* Responsive */
