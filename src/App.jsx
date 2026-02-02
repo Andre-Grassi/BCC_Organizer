@@ -1,17 +1,62 @@
 import { useState } from 'react';
 import CourseGrid from './components/CourseGrid';
+import Notifications, { useNotifications } from './components/Notifications';
 import { INITIAL_COURSES, CATEGORY_COLORS } from './data/courses';
 import './App.css';
 
+const STORAGE_KEY = 'bcc-organizer-state';
+
 function App() {
-  const [courses, setCourses] = useState(INITIAL_COURSES);
-  const [completedCourses, setCompletedCourses] = useState({});
+  const { notifications, addNotification, dismissNotification } = useNotifications();
+
+  const [courses, setCourses] = useState(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        return parsed.courses || INITIAL_COURSES;
+      } catch {
+        return INITIAL_COURSES;
+      }
+    }
+    return INITIAL_COURSES;
+  });
+
+  const [completedCourses, setCompletedCourses] = useState(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        return parsed.completedCourses || {};
+      } catch {
+        return {};
+      }
+    }
+    return {};
+  });
+
   const [error, setError] = useState(null);
 
+  const handleSave = () => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      courses,
+      completedCourses,
+      savedAt: new Date().toISOString()
+    }));
+    addNotification('Grade salva com sucesso!', 'success');
+  };
+
   const handleReset = () => {
+    const confirmed = window.confirm(
+      '⚠️ Tem certeza que deseja resetar a grade?\n\nTodas as alterações serão perdidas!'
+    );
+    if (!confirmed) return;
+
     setCourses(INITIAL_COURSES);
     setCompletedCourses({});
+    localStorage.removeItem(STORAGE_KEY);
     setError(null);
+    addNotification('Grade resetada', 'info');
   };
 
   const handleToggleCompleted = (courseCode) => {
@@ -23,12 +68,22 @@ function App() {
 
   return (
     <div className="app">
+      <Notifications
+        notifications={notifications}
+        onDismiss={dismissNotification}
+      />
+
       <header className="app-header">
         <h1>📚 Organizador de Grade - BCC UFPR</h1>
         <p className="subtitle">Arraste as disciplinas para organizar sua grade. Marque as concluídas!</p>
-        <button className="reset-btn" onClick={handleReset}>
-          🔄 Resetar Grade
-        </button>
+        <div className="header-buttons">
+          <button className="save-btn" onClick={handleSave}>
+            💾 Salvar
+          </button>
+          <button className="reset-btn" onClick={handleReset}>
+            🔄 Resetar Grade
+          </button>
+        </div>
       </header>
 
       {error && (

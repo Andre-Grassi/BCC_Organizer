@@ -27,6 +27,33 @@
   color: rgba(255, 255, 255, 0.7);
 }
 
+.header-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.save-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #34C759 0%, #28A745 100%);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  font-size: 0.9rem;
+}
+
+.save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(52, 199, 89, 0.4);
+}
+
+.save-btn:active {
+  transform: translateY(0);
+}
+
 .reset-btn {
   padding: 10px 20px;
   border: none;
@@ -46,6 +73,25 @@
 
 .reset-btn:active {
   transform: translateY(0);
+}
+
+.save-message {
+  display: block;
+  margin-top: 10px;
+  color: #34C759;
+  font-weight: 600;
+  font-size: 0.85rem;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .app-main {

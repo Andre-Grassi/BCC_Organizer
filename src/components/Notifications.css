@@ -1,0 +1,124 @@
+.notifications-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+    max-width: 320px;
+}
+
+.notification {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: rgba(30, 30, 30, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 0.9rem;
+    pointer-events: auto;
+    animation: slideIn 0.3s ease;
+    transform-origin: top right;
+}
+
+.notification.exiting {
+    animation: slideOut 0.3s ease forwards;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(50%) scale(0.9);
+    }
+}
+
+.notification-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.notification.success .notification-icon {
+    background: linear-gradient(180deg, #34C759 0%, #28A745 100%);
+    color: white;
+}
+
+.notification.error .notification-icon {
+    background: linear-gradient(180deg, #FF3B30 0%, #CC2D25 100%);
+    color: white;
+}
+
+.notification.info .notification-icon {
+    background: linear-gradient(180deg, #007AFF 0%, #0056CC 100%);
+    color: white;
+}
+
+.notification-message {
+    flex: 1;
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+.notification-close {
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+}
+
+.notification-close:hover {
+    background: rgba(255, 255, 255, 0.25);
+    color: white;
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+    .notifications-container {
+        left: 20px;
+        right: 20px;
+        max-width: none;
+    }
+
+    .notification {
+        font-size: 0.85rem;
+        padding: 12px 14px;
+    }
+}
